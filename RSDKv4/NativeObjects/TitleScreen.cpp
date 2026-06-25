@@ -158,6 +158,10 @@ void TitleScreen_Create(void *objPtr)
         LoadTexture("Data/Game/Menu/Generic.png", TEXFMT_RGBA8888);
     LoadTexture("Data/Game/Menu/PlayerSelect.png", TEXFMT_RGBA8888);
     LoadTexture("Data/Game/Menu/SegaID.png", TEXFMT_RGBA8888);
+
+    if (GetGlobalVariableByName("skipTitleScreen") == true){
+        ResetNativeObject(self, MenuControl_Create, MenuControl_Main);
+    }
 }
 void TitleScreen_Main(void *objPtr)
 {

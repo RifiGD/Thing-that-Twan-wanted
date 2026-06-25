@@ -94,6 +94,10 @@ void SegaSplash_Create(void *objPtr)
         default: break;
     }
 #endif
+
+    if (GetGlobalVariableID("skipSegaSplash") == true){
+        ResetNativeObject(self, CWSplash_Create, CWSplash_Main);
+    }
 }
 void SegaSplash_Main(void *objPtr)
 {

@@ -8,38 +8,1036 @@ void MenuControl_Create(void *objPtr)
     SetMusicTrack("MainMenu.ogg", 0, true, 106596);
     CREATE_ENTITY(MenuBG);
 
-    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
-    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
-    self->buttonCount++;
+    int menuButtonCount = GetGlobalVariableByName("menuControl.buttonCount");
 
-    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
-    self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
-    self->buttonCount++;
+    PrintLog("Menu Button Count: %d", menuButtonCount);
 
-#if RETRO_USE_MOD_LOADER
-    int vsID = GetSceneID(STAGELIST_PRESENTATION, "2P VS");
-    if (vsID != -1) {
-#else
-    if (Engine.gameType == GAME_SONIC2) {
-#endif
-        self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
-        self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+    if (menuButtonCount < 1) {
+        self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+        self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+        self->buttonCount++;
+
+        self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+        self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+        self->buttonCount++;
+
+    #if RETRO_USE_MOD_LOADER
+        int vsID = GetSceneID(STAGELIST_PRESENTATION, "2P VS");
+        if (vsID != -1) {
+    #else
+        if (Engine.gameType == GAME_SONIC2) {
+    #endif
+            self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+            self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+            self->buttonCount++;
+        }
+
+        if (Engine.onlineActive) {
+            self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+            self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+            self->buttonCount++;
+
+            self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+            self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+            self->buttonCount++;
+        }
+
+        self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+        self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
         self->buttonCount++;
     }
+    else {
+        int menuButton1 = GetGlobalVariableByName("menuButton1");
+        int menuButton2 = GetGlobalVariableByName("menuButton2");
+        int menuButton3 = GetGlobalVariableByName("menuButton3");
+        int menuButton4 = GetGlobalVariableByName("menuButton4");
+        int menuButton5 = GetGlobalVariableByName("menuButton5");
+        int menuButton6 = GetGlobalVariableByName("menuButton6");
 
-    if (Engine.onlineActive) {
-        self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
-        self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
-        self->buttonCount++;
+        if (menuButtonCount > 6)
+            menuButtonCount = 6;
+            
+        switch (menuButtonCount)
+        {
+        case 1:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
 
-        self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
-        self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
-        self->buttonCount++;
+        case 2:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton2)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
+
+        case 3:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton2)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton3)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
+
+        case 4:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton2)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton3)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton4)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
+
+        case 5:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton2)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton3)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton4)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton5)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
+
+        case 6:
+            switch (menuButton1)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton2)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton3)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton4)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton5)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+
+            switch (menuButton6)
+            {
+            case 1:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            case 2:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(TimeAttackButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_TIMEATTACK;
+                self->buttonCount++;
+                break;
+            case 3:
+                if (Engine.gameType == GAME_SONIC2) {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(MultiplayerButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_MULTIPLAYER;
+                    self->buttonCount++;
+                }
+                else {
+                    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                    self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                    self->buttonCount++;
+                }
+                break;
+            case 4:
+                self->buttons[self->buttonCount]     = CREATE_ENTITY(AchievementsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_ACHIEVEMENTS;
+                self->buttonCount++;
+                break;
+            case 5:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(LeaderboardsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_LEADERBOARDS;
+                self->buttonCount++;
+                break;
+            case 6:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
+                self->buttonCount++;
+                break;
+            default:
+                self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(StartGameButton);
+                self->buttonFlags[self->buttonCount] = BUTTON_STARTGAME;
+                self->buttonCount++;
+                break;
+            }
+            break;
+        }
     }
-
-    self->buttons[self->buttonCount]     = (NativeEntity_AchievementsButton *)CREATE_ENTITY(OptionsButton);
-    self->buttonFlags[self->buttonCount] = BUTTON_OPTIONS;
-    self->buttonCount++;
 
     self->backButton          = CREATE_ENTITY(BackButton);
     self->backButton->visible = false;
